@@ -1,0 +1,33 @@
+intents:
+- greet
+- goodbye
+- bot_challenge
+- thanks
+- menu
+- full_date
+- day
+- order
+entities:
+- day
+- time
+- food
+- option
+- addition
+templates:
+  utter_greet:
+  - text: Hey! Welcome to our restaurant!
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_welcome:
+  - text: You're welcome.
+actions:
+- utter_greet
+- utter_goodbye
+- utter_welcome
+- utter_which_day
+- utter_iamabot
+- action_get_menu
+- action_get_date
+- action_get_order

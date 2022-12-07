@@ -1,0 +1,8 @@
+cheese
+meat
+tomatoes
+ketchup
+mustard
+pickles
+onion
+garlic
