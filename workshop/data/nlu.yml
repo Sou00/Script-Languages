@@ -1,0 +1,75 @@
+version: "2.0"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    
+- intent: thanks
+  examples: |
+     - thanks 
+     - thank you
+     - ok
+
+- intent: menu
+  examples: |
+     - can I see the menu?
+     - what can I eat?
+     - what kind of food do you have?
+ 
+- intent: day
+  examples: |
+     - are you open on [monday](day)?
+     - are you open [today](day)?
+     - what time do you open on [saturday](day)?
+     - what time do you open [today](day)?
+     - what time do you close on [wednesday](day)?
+     - what time do you close [today](day)?
+ 
+- intent: full_date
+  examples: |
+     - are you open at [08:30](time) on [tuesday](day)?
+     - are you open at [12:10](time) on [wednesday](day)?
+     - are you open at [03:49](time) on [friday](day)?
+
+- intent: order
+  examples: |
+     - i would like to order [lasagne](food)
+     - i will have a [burger](food)
+     - i want [pizza](food)
+     - i would like to order [lasagne](food) [with no](option) [tomato](addition)
+     - i will have a [burger](food) [with extra](option) [meat](addition)
+     - i want [pizza](food) [without](option) [cheese](addition)

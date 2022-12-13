@@ -1,0 +1,12 @@
+version: "2.0"
+nlu:
+- lookup: days
+  examples: |
+    -today
+    -monday
+    -tuesday
+    -wednesday
+    -thursday
+    -friday
+    -saturday
+    -sunday

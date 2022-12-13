@@ -1,0 +1,12 @@
+version: "2.0"
+nlu:
+- lookup: additions
+  examples: |
+    -cheese
+    -meat
+    -tomatoes
+    -ketchup
+    -mustard
+    -pickles
+    -onion
+    -garlic

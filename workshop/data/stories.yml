@@ -1,0 +1,50 @@
+version: "2.0"
+
+stories:
+
+- story: Ask menu
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: menu
+  - action: action_get_menu
+  - intent: goodbye
+  - action: utter_goodbye
+  
+- story: Ask if open on day
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: day
+  - action: action_get_date
+  - intent: goodbye
+  - action: utter_goodbye
+  
+- story: Ask if open on full date
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: full_date
+  - action: action_get_date
+  - intent: goodbye
+  - action: utter_goodbye
+  
+- story: Order
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: order
+  - action: action_get_order
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Date with order
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: full_date
+  - action: action_get_date
+  - intent: order
+  - action: action_get_order
+  - intent: goodbye
+  - action: utter_goodbye

@@ -1,0 +1,35 @@
+version: "2.0"
+nlu:
+- lookup: food
+  examples: |
+    -pizza
+    -burrito
+    -hot-dog
+    -burger
+    -spaghetti carbonara
+    -lasagne
+    -tiramisu
+    -ice cream
+    -pho
+    -mac and cheese
+    -biryani
+    -kebab
+    -yakisoba
+    -wonton
+    -fried chicken
+    -nachos
+    -french fries
+    -brownie
+    -kimchi
+    -gyoza
+    -cupcake
+    -risotto
+    -mochi
+    -onigiri
+    -yakitori
+    -paella
+    -sashimi
+    -sushi
+    -croissant
+    -ramen
+    -tacos
