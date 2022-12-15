@@ -1,0 +1,122 @@
+player.onChat("buildwall", function () {
+})
+
+let castle_pos = world(63,63,380)
+
+function buildWall (material:Block,start:Position, end:Position){
+
+    for (let i = start.getValue(Axis.Y); i < end.getValue(Axis.Y) ; i++) {
+        shapes.line(material, world(start.getValue(Axis.X),i,start.getValue(Axis.Z)),
+         world(end.getValue(Axis.X), i, end.getValue(Axis.Z)))
+    }
+
+}
+
+function buildFloor (material:Block,start:Position , end: Position){
+    for (let i = start.getValue(Axis.X); i < end.getValue(Axis.X); i++) {
+        shapes.line(material, world(i, start.getValue(Axis.Y), start.getValue(Axis.Z)),
+            world(i, end.getValue(Axis.Y), end.getValue(Axis.Z)))
+    }
+}
+
+function buildTop(material:Block, start: Position, end: Position){
+    for (let i = start.getValue(Axis.Z); i <= end.getValue(Axis.Z); i+=2)
+        for (let j = start.getValue(Axis.X); j <= end.getValue(Axis.X); j+=2){
+            blocks.place(material, world(j, start.getValue(Axis.Y), i))
+        }
+    
+}
+
+function buildFullTop(material: Block, start: Position, end: Position){
+    buildTop(material, start, world(end.getValue(Axis.X), end.getValue(Axis.Y), start.getValue(Axis.Z)))
+    buildTop(material, start, world(start.getValue(Axis.X), end.getValue(Axis.Y), end.getValue(Axis.Z)))
+    buildTop(material, world(end.getValue(Axis.X), start.getValue(Axis.Y), start.getValue(Axis.Z)),
+        world(end.getValue(Axis.X), end.getValue(Axis.Y), end.getValue(Axis.Z)))
+    buildTop(material, world(start.getValue(Axis.X), start.getValue(Axis.Y), end.getValue(Axis.Z))
+        , world(end.getValue(Axis.X), end.getValue(Axis.Y), end.getValue(Axis.Z)))
+}
+;
+function buildTower(material: Block, start: Position, end: Position){
+    buildWall(material, start, world(end.getValue(Axis.X), end.getValue(Axis.Y), start.getValue(Axis.Z)))
+    buildWall(material, start, world(start.getValue(Axis.X), end.getValue(Axis.Y), end.getValue(Axis.Z)))
+    buildWall(material, world(end.getValue(Axis.X), start.getValue(Axis.Y), start.getValue(Axis.Z)),
+                         world(end.getValue(Axis.X), end.getValue(Axis.Y), end.getValue(Axis.Z)))
+    buildWall(material, world(start.getValue(Axis.X), start.getValue(Axis.Y), end.getValue(Axis.Z))
+                        , world(end.getValue(Axis.X), end.getValue(Axis.Y), end.getValue(Axis.Z)))
+    buildFloor(material, world(start.getValue(Axis.X), end.getValue(Axis.Y)-1, start.getValue(Axis.Z)),
+        world(end.getValue(Axis.X), end.getValue(Axis.Y) - 1, end.getValue(Axis.Z)))
+    buildFullTop(material, world(start.getValue(Axis.X), end.getValue(Axis.Y), start.getValue(Axis.Z)), end)
+    
+}
+
+function buildMoat(start: Position, end: Position, size: number){
+    for(let i = 0; i < size; i++){
+//left
+        buildWall(WATER, world(start.getValue(Axis.X) , start.getValue(Axis.Y), start.getValue(Axis.Z)-i),
+         world(end.getValue(Axis.X) , end.getValue(Axis.Y) , start.getValue(Axis.Z)-i))
+//front
+        buildWall(WATER, world(start.getValue(Axis.X) - i, start.getValue(Axis.Y), start.getValue(Axis.Z) -size+1),
+         world(start.getValue(Axis.X)-i, end.getValue(Axis.Y) , end.getValue(Axis.Z)+size-1 ))
+//back
+        buildWall(WATER, world(end.getValue(Axis.X) + i, start.getValue(Axis.Y) , start.getValue(Axis.Z)-size+1),
+            world(end.getValue(Axis.X) + i, end.getValue(Axis.Y) , end.getValue(Axis.Z)+size-1))
+//right
+        buildWall(WATER, world(start.getValue(Axis.X)-size+1, start.getValue(Axis.Y) , end.getValue(Axis.Z)+i)
+            , world(end.getValue(Axis.X)+size-1, end.getValue(Axis.Y) , end.getValue(Axis.Z)+i))
+    }
+    
+}
+
+let x=20
+let y =11
+let z=20
+
+buildWall(RED_SANDSTONE,castle_pos, world(x,y,0).add(castle_pos))
+buildWall(RED_SANDSTONE,castle_pos, world(0, y, z).add(castle_pos))
+buildWall(RED_SANDSTONE,world(0, 0, z).add(castle_pos), world(x, y, z).add(castle_pos))
+buildWall(RED_SANDSTONE,world(x, 0, 0).add(castle_pos), world(x, y, z).add(castle_pos))
+
+//left
+buildWall(GLASS,world(3, 2, 0).add(castle_pos), world(x-3, 5, 0).add(castle_pos))
+buildWall(GLASS,world(3, 7, 0).add(castle_pos), world(x-3, 10, 0).add(castle_pos))
+//back
+buildWall(GLASS,world(x, 2, 3).add(castle_pos), world(x, 5, z-3).add(castle_pos))
+buildWall(GLASS,world(x, 7, 3).add(castle_pos), world(x, 10, z-3).add(castle_pos))
+//right
+buildWall(GLASS,world(3, 2, z).add(castle_pos), world(x-3, 5, z).add(castle_pos))
+buildWall(GLASS,world(3, 7, z).add(castle_pos), world(x-3, 10, z).add(castle_pos))
+
+//1
+buildFloor(PRISMARINE_BRICKS ,world(1, 0, 1).add(castle_pos),world(x,0,z-1).add(castle_pos))
+//2
+buildFloor(GOLD_BLOCK,world(1, 5, 1).add(castle_pos), world(x, 5, z-1).add(castle_pos))
+
+//okujou
+buildFloor(RED_SANDSTONE,world(1, y-1, 1).add(castle_pos), world(x, y-1, z).add(castle_pos))
+
+//top
+buildFullTop(RED_SANDSTONE, world(0, y, 0).add(castle_pos), world(x, y, z).add(castle_pos))
+
+//tower
+buildTower(EMERALD_BLOCK, world(0, y, 0).add(castle_pos),world(4,y+6,4).add(castle_pos))
+buildTower(DIAMOND_BLOCK, world(x-4, y, 0).add(castle_pos),world(x,y+6,4).add(castle_pos))
+buildTower(AMETHYST_BLOCK, world(0, y, z-4).add(castle_pos),world(4,y+6,z).add(castle_pos))
+buildTower(REDSTONE_BLOCK, world(x-4, y, z-4).add(castle_pos),world(x,y+6,z).add(castle_pos))
+//moat
+buildMoat(world(-1,-3,-1).add(castle_pos), world(x+1, 0, z+1).add(castle_pos), 5)
+
+//entrance 1
+ buildWall(AIR,world(0,1,7).add(castle_pos),world(0,5,z-7).add(castle_pos))
+//entrance 2
+ buildWall(AIR,world(0,6,1).add(castle_pos),world(0,10,6).add(castle_pos))
+
+//bridge 1
+buildFloor(PRISMARINE_BRICKS,world(-4,0,7).add(castle_pos),world(1, 0, z-7).add(castle_pos))
+shapes.line(PRISMARINE_BRICK_STAIRS,world(-5,0,7).add(castle_pos),world(-5,0,z-7).add(castle_pos) )
+//bridge 2
+shapes.line(CRIMSON_STAIRS,world(-6,0,1).add(castle_pos),world(-1,5,1).add(castle_pos))
+shapes.line(CRIMSON_STAIRS,world(-6,0,2).add(castle_pos),world(-1,5,2).add(castle_pos))
+shapes.line(CRIMSON_STAIRS,world(-6,0,3).add(castle_pos),world(-1,5,3).add(castle_pos))
+shapes.line(CRIMSON_STAIRS,world(-6,0,4).add(castle_pos),world(-1,5,4).add(castle_pos))
+shapes.line(CRIMSON_STAIRS,world(-6,0,5).add(castle_pos),world(-1,5,5).add(castle_pos))
+shapes.line(CRIMSON_STAIRS,world(-6,0,6).add(castle_pos),world(-1,5,6).add(castle_pos))
