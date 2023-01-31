@@ -10,37 +10,48 @@ html = api.get(url)
 
 doc = Nokogiri::HTML.parse(html.body)
 
-products = []
 product_name = []
 prices = []
+pages = []
 
-doc.css('.a-section.a-spacing-small.puis-padding-left-small.puis-padding-right-small').map do |a|
-  products.push(a)
+doc.css('a.s-pagination-item.s-pagination-button').map do |a|
+  pages.push("https://www.amazon.com"+a['href'])
 end
 
-products.each do |product|
-  product.css('.a-size-base-plus.a-color-base.a-text-normal').map do |a|
-    product_name.push(a.text.strip)
-    puts a.text.strip
+num_pages = 3
+pages.each do |page|
+  products = []
+  doc.css('.a-section.a-spacing-small.puis-padding-left-small.puis-padding-right-small').map do |a|
+    products.push(a)
   end
-  product.css('[class="a-price"]').css('.a-offscreen').map do |a|
-    prices.push(a.text.strip)
-    puts a.text.strip
+  puts page
+  products.each do |product|
+    product.css('.a-size-base-plus.a-color-base.a-text-normal').map do |a|
+      product_name.push(a.text.strip)
+      puts a.text.strip
+    end
+    product.css('[class="a-price"]').css('.a-offscreen').map do |a|
+      prices.push(a.text.strip)
+      puts a.text.strip
 
+    end
   end
+
+  num_pages-=1
+  if(num_pages == 0)
+    break;
+  end
+  html = api.get(page)
+  doc = Nokogiri::HTML.parse(html.body)
 end
-# doc.css('.a-size-base-plus.a-color-base.a-text-normal').map do |a|
-#   product_name.push(a.text.strip)
-# end
-
-
 
 # a-section a-spacing-small puis-padding-left-small puis-padding-right-small
 # a-size-base-plus a-color-base a-text-normal
 
+#s-pagination-item s-pagination-button
 puts "Amazon Category URL: #{url}"
-puts "Amazon Product Name: #{product_name}"
-puts "Amazon Product Price: #{prices}"
+puts "Amazon Product Names: #{product_name}"
+puts "Amazon Product Prices: #{prices}"
 puts "Amazon Product Name Len: #{product_name.length}"
 
 puts "Amazon Product Price Len: #{prices.length}"
